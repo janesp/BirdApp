@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    kotlin("plugin.serialization") version "1.9.22"
 }
 
 kotlin {
@@ -28,10 +29,6 @@ kotlin {
     
     sourceSets {
         
-        androidMain.dependencies {
-            implementation(libs.compose.ui.tooling.preview)
-            implementation(libs.androidx.activity.compose)
-        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -39,6 +36,21 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation("media.kamel:kamel-image:0.9.4")
+            implementation("io.ktor:ktor-client-core:2.3.10")
+            implementation("io.ktor:ktor-client-content-negotiation:2.3.10")
+            implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.10")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+            api("dev.icerock.moko:mvvm-core:0.16.1") // only ViewModel, EventsDispatcher, Dispatchers.UI
+            api("dev.icerock.moko:mvvm-compose:0.16.1") // api mvvm-core, getViewModel for Compose Multiplatform
+        }
+        androidMain.dependencies {
+            implementation(libs.compose.ui.tooling.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation("io.ktor:ktor-client-android:2.3.10")
+        }
+        iosMain.dependencies {
+            implementation("io.ktor:ktor-client-darwin:2.3.10")
         }
     }
 }
